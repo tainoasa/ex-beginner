@@ -2,6 +2,7 @@ package com.example.ex_beginner.controller;
 
 import com.example.ex_beginner.domain.User;
 import com.example.ex_beginner.form.UserForm;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,11 +28,15 @@ public class Exam04Controller {
         if (result.hasErrors()) {
             return index(model, userForm);
         }
-        
+
         User user = new User();
-        user.setName(userForm.getName());
+//        user.setName(userForm.getName());
+//        user.setAge(userForm.getIntVal(userForm.getAge()));
+//        user.setComment(userForm.getComment());
+
+        BeanUtils.copyProperties(userForm, user);
         user.setAge(userForm.getIntVal(userForm.getAge()));
-        user.setComment(userForm.getComment());
+
         model.addAttribute("user", user);
 
         return "exam04-result";
